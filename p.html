@@ -1,0 +1,711 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tamil Nadu Politics — Unfiltered</title>
+    <link
+        href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:ital,wght@0,400;0,500;1,400&family=Syne:wght@400;700;800&family=Space+Grotesk:wght@300;400;500&display=swap"
+        rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        html {
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background: #080b0f;
+            color: #d4cfc7;
+            font-family: 'Space Grotesk', sans-serif;
+            font-weight: 300;
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        /* RAW BACKGROUND — grain + minimal color bleed */
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background:
+                radial-gradient(ellipse 55% 45% at 10% 15%, rgba(120, 60, 20, 0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 50% 50% at 90% 80%, rgba(20, 50, 100, 0.1) 0%, transparent 60%),
+                radial-gradient(ellipse 40% 40% at 55% 50%, rgba(60, 20, 100, 0.07) 0%, transparent 55%);
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        /* grain texture */
+        body::after {
+            content: '';
+            position: fixed;
+            inset: 0;
+            opacity: 0.55;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='300' height='300'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='300' height='300' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .wrap {
+            position: relative;
+            z-index: 1;
+            max-width: 820px;
+            margin: 0 auto;
+            padding: 0 20px 100px;
+        }
+
+        /* HEADER */
+        header {
+            padding: 80px 0 48px;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.07);
+            margin-bottom: 0;
+        }
+
+        .mono-tag {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 10px;
+            letter-spacing: 0.18em;
+            color: rgba(200, 160, 80, 0.7);
+            text-transform: uppercase;
+            margin-bottom: 20px;
+            display: block;
+        }
+
+        h1 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(48px, 9vw, 96px);
+            font-weight: 800;
+            line-height: 0.92;
+            letter-spacing: -0.03em;
+            color: #f0ece4;
+            margin-bottom: 24px;
+        }
+
+        h1 span {
+            display: block;
+            color: rgba(200, 160, 80, 0.85);
+        }
+
+        .header-sub {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 11px;
+            color: rgba(200, 195, 185, 0.45);
+            letter-spacing: 0.1em;
+            line-height: 1.8;
+        }
+
+        /* SECTION — glass but raw */
+        .sec {
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 52px 0 0;
+            margin-top: 0;
+            animation: up 0.6s ease both;
+        }
+
+        @keyframes up {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .sec:nth-child(2) {
+            animation-delay: 0.05s;
+        }
+
+        .sec:nth-child(3) {
+            animation-delay: 0.1s;
+        }
+
+        .sec:nth-child(4) {
+            animation-delay: 0.15s;
+        }
+
+        .sec:nth-child(5) {
+            animation-delay: 0.2s;
+        }
+
+        .sec:nth-child(6) {
+            animation-delay: 0.25s;
+        }
+
+        .sec:nth-child(7) {
+            animation-delay: 0.3s;
+        }
+
+        .sec:nth-child(8) {
+            animation-delay: 0.35s;
+        }
+
+        .sec-label {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 0.25em;
+            text-transform: uppercase;
+            color: rgba(200, 160, 80, 0.55);
+            margin-bottom: 18px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .sec-label::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: rgba(255, 255, 255, 0.05);
+        }
+
+        h2 {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(26px, 4vw, 38px);
+            font-weight: 700;
+            line-height: 1.1;
+            color: #f0ece4;
+            letter-spacing: -0.02em;
+            margin-bottom: 28px;
+        }
+
+        /* GLASS PANEL — raw */
+        .panel {
+            background: rgba(255, 255, 255, 0.032);
+            border: 1px solid rgba(255, 255, 255, 0.07);
+            backdrop-filter: blur(12px);
+            -webkit-backdrop-filter: blur(12px);
+            border-radius: 4px;
+            padding: 32px 36px;
+            margin-bottom: 2px;
+        }
+
+        p {
+            font-size: 15px;
+            line-height: 1.85;
+            color: rgba(212, 207, 199, 0.82);
+            font-weight: 300;
+            margin-bottom: 20px;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* QUOTE */
+        .qblock {
+            margin: 24px 0;
+            padding: 20px 24px;
+            border-left: 2px solid rgba(200, 160, 80, 0.5);
+            background: rgba(200, 160, 80, 0.04);
+        }
+
+        .qblock p {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 13.5px;
+            font-style: italic;
+            color: rgba(200, 160, 80, 0.85);
+            line-height: 1.7;
+            margin: 0;
+        }
+
+        /* LINKS */
+        a {
+            color: rgba(200, 170, 100, 0.9);
+            text-decoration: none;
+            border-bottom: 1px solid rgba(200, 170, 100, 0.25);
+            transition: color 0.2s, border-color 0.2s;
+        }
+
+        a:hover {
+            color: #f0ece4;
+            border-color: rgba(240, 236, 228, 0.5);
+        }
+
+        /* HOF — raw table feel */
+        .hof {
+            margin-top: 24px;
+            border: 1px solid rgba(255, 255, 255, 0.07);
+        }
+
+        .hof-row {
+            display: grid;
+            grid-template-columns: 200px 1fr;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .hof-row:last-child {
+            border-bottom: none;
+        }
+
+        .hof-name {
+            padding: 16px 20px;
+            border-right: 1px solid rgba(255, 255, 255, 0.05);
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 12px;
+            color: rgba(200, 160, 80, 0.8);
+            display: flex;
+            align-items: center;
+        }
+
+        .hof-desc {
+            padding: 16px 20px;
+            font-size: 13.5px;
+            color: rgba(212, 207, 199, 0.65);
+            line-height: 1.6;
+            display: flex;
+            align-items: center;
+        }
+
+        /* RANKING */
+        .ranks {
+            margin-top: 24px;
+        }
+
+        .rank-row {
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            padding: 20px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .rank-row:last-child {
+            border-bottom: none;
+        }
+
+        .rnum {
+            font-family: 'Syne', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            letter-spacing: 0.1em;
+            color: rgba(200, 160, 80, 0.5);
+            min-width: 28px;
+            padding-top: 3px;
+        }
+
+        .rtext h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: #f0ece4;
+            margin-bottom: 6px;
+        }
+
+        .rtext p {
+            font-size: 13.5px;
+            margin: 0;
+            line-height: 1.65;
+        }
+
+        /* LEADERS */
+        .leaders {
+            margin-top: 24px;
+            display: flex;
+            flex-direction: column;
+            gap: 0;
+        }
+
+        .leader {
+            padding: 24px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .leader:last-child {
+            border-bottom: none;
+        }
+
+        .leader-head {
+            display: flex;
+            align-items: baseline;
+            gap: 12px;
+            margin-bottom: 10px;
+        }
+
+        .leader-init {
+            font-family: 'Syne', sans-serif;
+            font-size: 28px;
+            font-weight: 800;
+            color: rgba(200, 160, 80, 0.3);
+            line-height: 1;
+        }
+
+        .leader-head h4 {
+            font-family: 'Space Grotesk', sans-serif;
+            font-size: 15px;
+            font-weight: 500;
+            color: #f0ece4;
+        }
+
+        .leader p {
+            font-size: 13.5px;
+            line-height: 1.7;
+        }
+
+        /* CLOSING */
+        .closing {
+            border-top: 1px solid rgba(255, 255, 255, 0.07);
+            padding: 72px 0;
+            text-align: left;
+        }
+
+        .closing-big {
+            font-family: 'Syne', sans-serif;
+            font-size: clamp(22px, 4vw, 38px);
+            font-weight: 700;
+            line-height: 1.2;
+            letter-spacing: -0.02em;
+            color: rgba(240, 236, 228, 0.75);
+            max-width: 600px;
+            margin-bottom: 40px;
+        }
+
+        .closing-stamp {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: clamp(22px, 4vw, 38px);
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            color: rgba(200, 160, 80, 0.6);
+            border: 2px solid rgba(200, 160, 80, 0.2);
+            display: inline-block;
+            padding: 20px 30px;
+        }
+
+        /* SIDE NAV */
+        .sidenav {
+            position: fixed;
+            left: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 10;
+            display: flex;
+            flex-direction: column;
+            gap: 6px;
+        }
+
+        .snav {
+            font-family: 'IBM Plex Mono', monospace;
+            font-size: 9px;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(200, 195, 185, 0.2);
+            cursor: pointer;
+            transition: color 0.2s;
+            padding: 3px 0;
+            border: none;
+            background: none;
+            text-align: left;
+        }
+
+        .snav:hover,
+        .snav.active {
+            color: rgba(200, 160, 80, 0.8);
+        }
+
+        @media (max-width: 900px) {
+            .sidenav {
+                display: none;
+            }
+        }
+
+        @media (max-width: 600px) {
+            .panel {
+                padding: 24px 20px;
+            }
+
+            .hof-row {
+                grid-template-columns: 1fr;
+            }
+
+            .hof-name {
+                border-right: none;
+                border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="sidenav">
+        <button class="snav" onclick="go('vijay')">Vijay</button>
+        <button class="snav" onclick="go('overlook')">Overlook</button>
+        <button class="snav" onclick="go('dravidian')">Dravidian</button>
+        <button class="snav" onclick="go('bjp')">BJP</button>
+        <button class="snav" onclick="go('corruption')">Corruption</button>
+        <button class="snav" onclick="go('ranking')">Ranking</button>
+        <button class="snav" onclick="go('profiles')">Profiles</button>
+    </nav>
+
+    <div class="wrap">
+
+        <header>
+            <span class="mono-tag">// Tamil Nadu Politics — A candid view</span>
+            <h1>Tamil<span>Unfiltered.</span></h1>
+            <p class="header-sub">
+                On Vijay · ADMK · DMK · BJP · Corruption<br>
+                And what the hell comes next
+            </p>
+        </header>
+
+        <!-- VIJAY -->
+        <section class="sec" id="vijay">
+            <div class="sec-label">01 — The new entrant</div>
+            <h2>Vijay & TVK</h2>
+            <div class="panel">
+                <p>I empathise with all the voters who voted for Vijay. But one question lingers: after the catastrophe
+                    in <a href="https://www.thehindu.com/news/national/tamil-nadu/" target="_blank"
+                        rel="noopener">Karur</a> (I don't blame him), Vijay stormed out and ran from the media. He took
+                    a solid week to speak on the issue, yet it was very poorly articulated.</p>
+                <div class="qblock">
+                    <p>"nan veetla illana office la iruppen en Mela kai vainga."</p>
+                </div>
+                <p>Now, with the <a href="https://www.thenewsminute.com/tamil-nadu/" target="_blank"
+                        rel="noopener">Jananayagan Leak</a>, there is nothing at all. Every time he has been given a
+                    chance to show his grit as a leader, he has come shy of courage and leadership itself. He cannot
+                    hide behind his cinema fame and his fans everywhere. All the TN party policies are "freebies maxed,"
+                    and <a href="https://tvkparty.in" target="_blank" rel="noopener">TVK</a> is no stranger.</p>
+                <p>When he claims he is the change that TN wants, I am excited — BUT how is he going to do that? He has
+                    given MLA seat tickets to approximately 50 people who just switched parties over his loyal cadres.
+                    He did take on the ruling party well, but that alone is not enough. Politics is real; he will face
+                    criticism from everyone for everything. It's not his movie premiere. Vijay has a clean slate and
+                    valuable precedents of what will work and what won't, so I hope he steps up and doesn't become the
+                    next <a href="https://en.wikipedia.org/wiki/Makkal_Needhi_Maiam" target="_blank"
+                        rel="noopener">Kamal Haasan</a>.</p>
+            </div>
+        </section>
+
+        <!-- OVERLOOK -->
+        <section class="sec" id="overlook">
+            <div class="sec-label">02 — The silver lining</div>
+            <h2>Overlook</h2>
+            <div class="panel">
+                <p>I welcome the entry of Vijay because it has put both these outdated Dravidian parties — sluggish,
+                    PR-oriented politics in TN — at risk. From now on, whoever comes to power will have to work better.
+                </p>
+            </div>
+        </section>
+
+        <!-- DRAVIDIAN -->
+        <section class="sec" id="dravidian">
+            <div class="sec-label">03 — The old guard</div>
+            <h2>ADMK vs DMK</h2>
+            <div class="panel">
+                <p>Honestly, I am not a big fan of both; they lost their identity and dignity over and over again. <a
+                        href="https://www.aiadmk.com" target="_blank" rel="noopener">ADMK</a> still has a democratic say
+                    in who is in charge of what, whereas <a href="https://www.dravida-munnetra-kazhagam.org"
+                        target="_blank" rel="noopener">DMK</a> belongs to the single Gopalapuram Family. DMK ridicules
+                    civil structures and makes them spineless.</p>
+                <p>The biggest joke is their pledge for Social Justice. Both (three now) play caste politics without any
+                    guilt. ADMK hatred for its alliance with BJP — but the moment you ask why, many struggle to reason
+                    it. They would say <a href="https://en.wikipedia.org/wiki/1965_anti-Hindi_agitations_in_Tamil_Nadu"
+                        target="_blank" rel="noopener">Hindi imposition</a>, but it was Congress that systematically
+                    broke all the languages in the North and made the South believe only Hindi exists there. That
+                    reframing deserves more attention — the North is home to Punjabi, Marathi, Bengali, Odia, and dozens
+                    of other languages that Congress-era centralisation quietly suffocated. The South was handed a
+                    simplified enemy.</p>
+                <p>Also, calling Hindi an alien language — if we take that route, the <a
+                        href="https://en.wikipedia.org/wiki/Periyar_E._V._Ramasamy" target="_blank" rel="noopener">DMK
+                        family traces back to Telugu origins</a> and MGR and Jayalalithaa are also not Tamil.</p>
+            </div>
+        </section>
+
+        <!-- BJP -->
+        <section class="sec" id="bjp">
+            <div class="sec-label">04 — The national player</div>
+            <h2>BJP & Opportunism</h2>
+            <div class="panel">
+                <p>ALL parties are opportunistic. But BJP has been unapologetic in their schemes and way of politics.
+                    They don't follow a nepotistic hierarchy unlike their opposition. What they did very well is <a
+                        href="https://en.wikipedia.org/wiki/Hindutva" target="_blank" rel="noopener">polarise the
+                        majority</a> that was scattered, and it worked. Now — I want to be honest here — polarising the
+                    majority is still identity politics. The difference is that BJP owns it openly while the Dravidian
+                    parties dress theirs up as social justice. Both are playing the same game; BJP is just less
+                    hypocritical about it.</p>
+                <p>I would have happily supported TN BJP if it had not formed an alliance with ADMK again because <a
+                        href="https://en.wikipedia.org/wiki/K._Annamalai" target="_blank" rel="noopener">Annamalai</a>
+                    deviated from the norm and tried to bring actual change. When the party decided to act against my
+                    leader from my state who knows the ground reality, the opportunism is evident. This also validates
+                    the general concern of Tamil Nadu losing its autonomy like it did when it gave away <a
+                        href="https://en.wikipedia.org/wiki/Katchatheevu" target="_blank"
+                        rel="noopener">Katchatheevu</a>.</p>
+                <p>Religions were and always will be a major factor in elections. DMK channels minorities whilst BJP
+                    unapologetically follows Hindutva principles. This heavily polarised the voting fractions in TN and
+                    India itself.</p>
+            </div>
+        </section>
+
+        <!-- CORRUPTION -->
+        <section class="sec" id="corruption">
+            <div class="sec-label">05 — The uncomfortable truth</div>
+            <h2>Corruption & Social Concerns</h2>
+            <div class="panel">
+                <p>NONE OF THESE PARTIES ARE NEW TO CORRUPTION. But a few are way bigger than the others and only a few
+                    directly affect citizens.</p>
+
+                <div class="hof">
+                    <div class="hof-row">
+                        <div class="hof-name"><a href="https://en.wikipedia.org/wiki/V._Senthil_Balaji" target="_blank"
+                                rel="noopener">Senthil Balaji</a></div>
+                        <div class="hof-desc">The "10 rupa minister" — cash-for-jobs scandal, arrested 2023.</div>
+                    </div>
+                    <div class="hof-row">
+                        <div class="hof-name"><a href="https://en.wikipedia.org/wiki/2G_spectrum_case" target="_blank"
+                                rel="noopener">Raja & Kanimozhi</a></div>
+                        <div class="hof-desc">2G stars — acquittal doesn't erase the scale of what was alleged and the
+                            years it took to get there.</div>
+                    </div>
+                    <div class="hof-row">
+                        <div class="hof-name">Sekar Babu</div>
+                        <div class="hof-desc">Extortion allegations that made headlines during the current DMK tenure.
+                        </div>
+                    </div>
+                </div>
+
+                <p style="margin-top:28px;"><a
+                        href="https://en.wikipedia.org/wiki/J._Jayalalithaa#Disproportionate_assets_case"
+                        target="_blank" rel="noopener">Jayalalithaa</a> was convicted by a Karnataka court in 2014 in a
+                    disproportionate assets case worth approximately ₹66 crore — later acquitted on appeal, but the
+                    trial ran eighteen years. <a href="https://en.wikipedia.org/wiki/M._Karunanidhi" target="_blank"
+                        rel="noopener">Karunanidhi</a> faced charges across multiple tenures, most notably the <a
+                        href="https://en.wikipedia.org/wiki/Punjab_foodgrains_scam" target="_blank"
+                        rel="noopener">Punjab wheat scam</a>, where allegations of large-scale procurement fraud dogged
+                    his administration. Both were great leaders who ruled with great grit; the corruption didn't erase
+                    the governance, but it shouldn't be erased from the record either.</p>
+
+                <p>Another grey area where DMK thrives is its Gunda culture. Their power is backed by mafias across all
+                    domains and it hasn't changed. The <a
+                        href="https://www.thehindu.com/news/national/tamil-nadu/drug-abuse-tamil-nadu/" target="_blank"
+                        rel="noopener">drug abuse</a>, illicit liquor deaths, and the spike in <a
+                        href="https://en.wikipedia.org/wiki/Protection_of_Children_from_Sexual_Offences_Act"
+                        target="_blank" rel="noopener">POCSO cases</a> were never seen before in TN. The number of bar
+                    licenses/TASMAKs opened by this government is 100 times the number of schools and colleges built in
+                    its last term. Zero liability to its people, and failed to deliver on anything it promised.</p>
+
+                <p>Another thing I hate about DMK is minority appeasement by hurting the majority — this keeps fractions
+                    polarised, which they exploit again and again. Now that Vijay came into the picture, this tactic has
+                    backfired; minorities see him as their messiah.</p>
+            </div>
+        </section>
+
+        <!-- RANKING -->
+        <section class="sec" id="ranking">
+            <div class="sec-label">06 — The verdict</div>
+            <h2>The Final Ranking</h2>
+            <div class="panel">
+                <p>ADMK at least has internal accountability, however imperfect, and a governance track record that EPS
+                    has worked to rehabilitate. TVK is an unknown quantity with a leader still proving himself. DMK is a
+                    known quantity — and that's the problem.</p>
+                <div class="ranks">
+                    <div class="rank-row">
+                        <div class="rnum">01</div>
+                        <div class="rtext">
+                            <h4><a href="https://www.aiadmk.com" target="_blank" rel="noopener">ADMK — Edappadi K.
+                                    Palaniswami</a></h4>
+                            <p>Internal accountability, a rehabilitated governance record, and a leader who earned his
+                                position by consolidating rather than inheriting.</p>
+                        </div>
+                    </div>
+                    <div class="rank-row">
+                        <div class="rnum">02</div>
+                        <div class="rtext">
+                            <h4><a href="https://tvkparty.in" target="_blank" rel="noopener">TVK — Vijay</a></h4>
+                            <p>An unknown quantity. The potential is real. So is the track record of avoiding
+                                accountability when it mattered most.</p>
+                        </div>
+                    </div>
+                    <div class="rank-row">
+                        <div class="rnum">03</div>
+                        <div class="rtext">
+                            <h4><a href="https://www.dravida-munnetra-kazhagam.org" target="_blank" rel="noopener">DMK —
+                                    M.K. Stalin</a></h4>
+                            <p>A known quantity. And that's the problem.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- PROFILES -->
+        <section class="sec" id="profiles">
+            <div class="sec-label">07 — Who stands out</div>
+            <h2>Figures Worth Watching</h2>
+            <div class="panel">
+                <div class="leaders">
+                    <div class="leader">
+                        <div class="leader-head">
+                            <span class="leader-init">S</span>
+                            <h4><a href="https://en.wikipedia.org/wiki/Seeman" target="_blank" rel="noopener">Seeman —
+                                    NTK</a></h4>
+                        </div>
+                        <p>True to his principles and ideologies even though I am not a fan of his separatist politics.
+                            Never once partnered with anyone; always stands alone. Now taking a nationalist approach
+                            towards elections — we have to wait.</p>
+                    </div>
+                    <div class="leader">
+                        <div class="leader-head">
+                            <span class="leader-init">E</span>
+                            <h4><a href="https://en.wikipedia.org/wiki/Edappadi_K._Palaniswami" target="_blank"
+                                    rel="noopener">EPS — ADMK</a></h4>
+                        </div>
+                        <p>Also an opportunist when he came to power — became CM, sidelined Sasikala, kicked out
+                            destabilising elements. His <a
+                                href="https://en.wikipedia.org/wiki/Edappadi_K._Palaniswami#As_Chief_Minister"
+                                target="_blank" rel="noopener">farmers' policies</a> were welcomed. His MoUs with
+                            various manufacturing companies (which Stalin sir took credit for), and his work as the
+                            "Membalam Minister" — bridge after bridge. His last year was buried under Covid.</p>
+                    </div>
+                    <div class="leader">
+                        <div class="leader-head">
+                            <span class="leader-init">A</span>
+                            <h4><a href="https://en.wikipedia.org/wiki/K._Annamalai" target="_blank"
+                                    rel="noopener">Annamalai — TN BJP</a></h4>
+                        </div>
+                        <p>A man with grit, consciousness, and a clean image stepped in as TN BJP's president. God, he
+                            made both the Dravidian parties and BJP itself fear his growth. He knew what would work in
+                            TN and how to destabilise them, but it required patience which BJP Center didn't have.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- CLOSING -->
+        <div class="closing">
+            <p class="closing-big">These Dravidians have lived on their ancestors' success of social justice for long
+                enough — it's time they change or leave. We are not here to compare our growth to states behind us; we
+                want to be the state that was an example to countries.</p>
+            <div class="closing-stamp">Tamil Nadu is for Tamil and its culture.</div>
+        </div>
+
+    </div>
+
+    <script>
+        function go(id) {
+            document.getElementById(id)?.scrollIntoView({ behavior: 'smooth', block: 'start' });
+        }
+
+        const secs = ['vijay', 'overlook', 'dravidian', 'bjp', 'corruption', 'ranking', 'profiles'];
+        const btns = document.querySelectorAll('.snav');
+
+        const obs = new IntersectionObserver(entries => {
+            entries.forEach(e => {
+                if (e.isIntersecting) {
+                    const i = secs.indexOf(e.target.id);
+                    btns.forEach((b, j) => b.classList.toggle('active', i === j));
+                }
+            });
+        }, { threshold: 0.3 });
+
+        secs.forEach(id => { const el = document.getElementById(id); if (el) obs.observe(el); });
+    </script>
+</body>
+
+</html>
